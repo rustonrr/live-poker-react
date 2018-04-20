@@ -1,0 +1,8 @@
+.community-cards{
+    display: flex;
+}
+
+.deal-new-hand-button{
+    background-color: green;
+    color: white;
+}

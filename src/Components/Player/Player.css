@@ -1,0 +1,8 @@
+.player-cards{
+    display: flex;
+}
+
+.fold-button{
+    background-color: red;
+    color: white;
+}
