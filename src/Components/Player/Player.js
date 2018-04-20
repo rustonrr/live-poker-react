@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Card from '../Card/Card';
 import { updateCards } from '../../Redux/reducer';
+import { bindActionCreators } from 'redux';
 import './Player.css';
 
 class Player extends Component {
@@ -23,7 +24,7 @@ class Player extends Component {
         ws.onmessage = (ev) => {
             console.log(ev.data);
             // set cards in reducer 
-            updateCards(JSON.parse(ev.data));
+            this.props.updateCards(JSON.parse(ev.data));
         }
     }
     foldHand(){
@@ -55,4 +56,8 @@ function mapStateToProps(state){
     return state;
 }
 
-export default connect(mapStateToProps, { updateCards })(Player);
+function mapDispatchToProps( dispatch ) {
+    return bindActionCreators({ updateCards }, dispatch )
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Player);
