@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Card from '../Card/Card';
+import { updateCards } from '../../Redux/reducer';
 import './Player.css';
 
 class Player extends Component {
@@ -11,7 +12,20 @@ class Player extends Component {
         }
         this.foldHand = this.foldHand.bind(this);
     }
-
+    
+    componentDidMount(){
+        this.connectWebSocket();
+    }
+    
+    connectWebSocket() {
+        var ws = new WebSocket('ws://10.0.1.8:5000');
+        // event emmited when receiving message 
+        ws.onmessage = (ev) => {
+            console.log(ev.data);
+            // set cards in reducer 
+            updateCards(JSON.parse(ev.data));
+        }
+    }
     foldHand(){
         this.setState({
             folded: true
@@ -41,4 +55,4 @@ function mapStateToProps(state){
     return state;
 }
 
-export default connect(mapStateToProps)(Player);
+export default connect(mapStateToProps, { updateCards })(Player);
