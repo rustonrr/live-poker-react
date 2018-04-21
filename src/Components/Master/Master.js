@@ -14,6 +14,7 @@ class Master extends Component {
                     {communityCards}
                 </div>
                 <button className='deal-new-hand-button'>Deal New Hand</button>
+                
             </div>
         );
     }

@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import LoginPage from './Components/LoginPage/LoginPage';
 import Player from './Components/Player/Player';
 import Master from './Components/Master/Master';
 import { Provider } from 'react-redux';
@@ -14,6 +15,7 @@ ReactDOM.render(
         <Provider store={store}>
             <div>
                 <Switch>
+                    <Route path='/' exact component={LoginPage} />
                     <Route path='/player' component={Player} />
                     <Route path='/master' component={Master} />
                 </Switch>

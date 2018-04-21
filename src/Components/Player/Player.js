@@ -19,10 +19,10 @@ class Player extends Component {
     }
     
     connectWebSocket() {
-        var ws = new WebSocket('ws://10.0.1.8:5000');
+        let webSocketReference = this.props.socketReference;
         // event emmited when receiving message 
-        ws.onmessage = (ev) => {
-            console.log(ev.data);
+        webSocketReference.onmessage = (ev) => {
+            console.log(ev);
             // set cards in reducer 
             this.props.updateCards(JSON.parse(ev.data));
         }
@@ -52,7 +52,7 @@ class Player extends Component {
 }
 
 function mapStateToProps(state){
-    console.log('map state', state)
+    console.log(state);
     return state;
 }
 
