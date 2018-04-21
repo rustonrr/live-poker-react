@@ -27,6 +27,7 @@ class Player extends Component {
             this.props.updateCards(JSON.parse(ev.data));
         }
     }
+    
     foldHand(){
         this.setState({
             folded: true

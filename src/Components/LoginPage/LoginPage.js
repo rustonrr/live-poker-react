@@ -14,6 +14,7 @@ class LoginPage extends Component {
         this.handleUserNameChange = this.handleUserNameChange.bind(this);
         this.handleGameCodeChange = this.handleGameCodeChange.bind(this);
         this.handleJoinGameSubmit = this.handleJoinGameSubmit.bind(this);
+        this.handleNewGameSubmit = this.handleNewGameSubmit.bind(this);
     }
 
     handleUserNameChange(e) {
@@ -28,9 +29,22 @@ class LoginPage extends Component {
         })
     }
 
-    handleJoinGameSubmit(e){
-        // alert(`${this.state.userName} has joined Game ${this.state.gameCode}`);
-                
+    handleNewGameSubmit(e){
+        let ws = new WebSocket('ws://10.0.1.8:5000');
+        this.props.saveWebsocket(ws);
+        ws.onopen = (event) => {
+            ws.send(JSON.stringify({
+                type: 'CREATE'
+            })); 
+        };
+        // event emmited when receiving message 
+        ws.onmessage = (ev) => {
+            console.log(ev.data);
+            this.props.history.push('/master');
+        }
+    }
+
+    handleJoinGameSubmit(e){                
         let ws = new WebSocket('ws://10.0.1.8:5000');
         this.props.saveWebsocket(ws);
         ws.onopen = (event) => {
@@ -43,9 +57,9 @@ class LoginPage extends Component {
         // event emmited when receiving message 
         ws.onmessage = (ev) => {
             console.log(ev.data);
-            this.props.history.push('/player')
+            // check for success first
+            this.props.history.push('/player');
         }
-        
     }
 
     render() {
@@ -54,32 +68,27 @@ class LoginPage extends Component {
             <div className='login-page-container'>
 
                 <div className='create-game-container'>
-                    <form>
-                        <h1>Create Game</h1>
-                        <input className='create-game-button' type='submit' value='Create' />
-                    </form>
+                    <h1>Create Game</h1>
+                    <button onClick={this.handleNewGameSubmit} className='create-game-button'>Create</button>
                 </div>
 
                 <div className='join-game-container'>
-                    {/* <form > */}
+                    <div>
+                        <h1>Join Game</h1>
+                        <label>
+                            User Name:
+                            <input onChange={this.handleUserNameChange} placeholder='User Name' type='text' name='User Name' />
+                        </label>
+                    </div>
 
-                        <div>
-                            <h1>Join Game</h1>
-                            <label>
-                                User Name:
-                                <input onChange={this.handleUserNameChange} placeholder='User Name' type='text' name='User Name' />
-                            </label>
-                        </div>
+                    <div>
+                        <label>
+                            Game Code:
+                            <input onChange={this.handleGameCodeChange} placeholder='Game Code' type='text' name='Game Code' />
+                        </label>
+                    </div>
 
-                        <div>
-                            <label>
-                                Game Code:
-                                <input onChange={this.handleGameCodeChange} placeholder='Game Code' type='text' name='Game Code' />
-                            </label>
-                        </div>
-
-                        <button onClick={this.handleJoinGameSubmit} className='join-game-button'>Join</button>
-                    {/* </form> */}
+                    <button onClick={this.handleJoinGameSubmit} className='join-game-button'>Join</button>
                 </div>
 
             </div>
