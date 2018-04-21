@@ -6,6 +6,13 @@ import { updateCommunityCards } from '../../Redux/reducer';
 import './Master.css';
 
 class Master extends Component {
+    constructor(){
+        super();
+        this.state = {
+
+        }
+        this.triggerDeal = this.triggerDeal.bind(this);
+    }
 
     componentDidMount(){
         this.connectWebSocket();
@@ -26,8 +33,17 @@ class Master extends Component {
         }
     }
 
+    triggerDeal() {
+        // console.log(this.props);
+        let webSocketReference = this.props.socketReference;
+        webSocketReference.send(JSON.stringify({
+            type: 'DEAL',
+            gameCode: this.props.gameCode
+        }))
+    }
+
     render() {
-        console.log(this.props);
+        // console.log(this.props);
         let communityCards = this.props.communityCards.map( (e, i) => {
             return <Card key={i} card={e} />
         })
@@ -36,7 +52,7 @@ class Master extends Component {
                 <div className='community-cards'>
                     {communityCards}
                 </div>
-                <button className='deal-new-hand-button'>Deal New Hand</button>
+                <button onClick={this.triggerDeal} className='deal-new-hand-button'>Deal New Hand</button>
                 
             </div>
         );

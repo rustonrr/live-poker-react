@@ -1,12 +1,14 @@
 const initialState = {
     playerCards: [],
     communityCards: [],
-    socketReference: null
+    socketReference: null,
+    gameCode: null
 };
 
 const UPDATE_CARDS = 'UPDATE_CARDS';
 const UPDATE_COMMUNITY_CARDS = 'UPDATE_COMMUNITY_CARDS';
 const SAVE_WEBSOCKET = 'SAVE_WEBSOCKET';
+const SAVE_GAME_CODE = 'SAVE_GAME_CODE';
 
 export default function reducer(state = initialState, action) {
     switch (action.type) {
@@ -19,6 +21,9 @@ export default function reducer(state = initialState, action) {
         case SAVE_WEBSOCKET:
             console.log('save_websocket is firing');
             return Object.assign({}, state, {socketReference: action.payload});
+        case SAVE_GAME_CODE:
+            console.log('save_game_code is firing');
+            return Object.assign({}, state, {gameCode: action.payload});
         default: 
             // console.log('default')
             return state;
@@ -43,5 +48,12 @@ export function saveWebsocket(ws) {
     return {
         type: SAVE_WEBSOCKET,
         payload: ws
+    }
+}
+
+export function saveGameCode(gameCode) {
+    return {
+        type: SAVE_GAME_CODE,
+        payload: gameCode
     }
 }

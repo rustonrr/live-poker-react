@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { saveWebsocket } from '../../Redux/reducer';
+import { saveWebsocket, saveGameCode } from '../../Redux/reducer';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import './LoginPage.css';
@@ -40,6 +40,8 @@ class LoginPage extends Component {
         // event emmited when receiving message 
         ws.onmessage = (ev) => {
             console.log(ev.data);
+            let data = JSON.parse(ev.data);
+            this.props.saveGameCode(data.gameCode)
             this.props.history.push('/master');
         }
     }
@@ -101,7 +103,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-    return bindActionCreators({ saveWebsocket }, dispatch )
+    return bindActionCreators({ saveWebsocket, saveGameCode }, dispatch )
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
