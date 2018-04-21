@@ -21,13 +21,16 @@ class Player extends Component {
     connectWebSocket() {
         let webSocketReference = this.props.socketReference;
         // event emmited when receiving message 
-        webSocketReference.onmessage = (ev) => {
-            console.log(ev);
+        webSocketReference.onmessage = (ev) => { //this is what gets fired when new cards come in
+            this.setState({
+                folded: false
+            })
+            console.log(ev); 
             // set cards in reducer 
             this.props.updateCards(JSON.parse(ev.data));
         }
     }
-    
+
     foldHand(){
         this.setState({
             folded: true

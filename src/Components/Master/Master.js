@@ -28,7 +28,9 @@ class Master extends Component {
                 case 'ADD_PLAYER':
                     console.log('player')
                     break;
-                default: this.props.updateCommunityCards(data);
+                default: 
+                    // this code gets called when new cards come in
+                    this.props.updateCommunityCards(data); 
             }
         }
     }

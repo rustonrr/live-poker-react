@@ -10,6 +10,12 @@ class Card extends Component {
         this.toggleHideCard = this.toggleHideCard.bind(this);
     }
 
+    componentWillReceiveProps(){
+        this.setState({
+            hideCard: true
+        })
+    }
+
     toggleHideCard(){
         this.setState({
             hideCard: !this.state.hideCard
