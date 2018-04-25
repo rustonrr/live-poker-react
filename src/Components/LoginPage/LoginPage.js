@@ -30,7 +30,7 @@ class LoginPage extends Component {
     }
 
     handleNewGameSubmit(e){
-        let ws = new WebSocket('ws://10.0.1.8:5000');
+        let ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
         this.props.saveWebsocket(ws);
         ws.onopen = (event) => {
             ws.send(JSON.stringify({
@@ -47,7 +47,7 @@ class LoginPage extends Component {
     }
 
     handleJoinGameSubmit(e){                
-        let ws = new WebSocket('ws://10.0.1.8:5000');
+        let ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
         this.props.saveWebsocket(ws);
         ws.onopen = (event) => {
             ws.send(JSON.stringify({
